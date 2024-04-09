@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=WaterWorld1
+comment1.params=
+comment1.target=WaterWorld1()
+comment2.params=
+comment2.target=void\ showRules()
+comment3.params=
+comment3.target=void\ act()
+comment4.params=
+comment4.target=void\ startGame()
+comment5.params=
+comment5.target=void\ drawWorld()
+numComments=6
