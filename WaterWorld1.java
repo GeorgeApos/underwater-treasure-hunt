@@ -4,6 +4,7 @@ public class WaterWorld1 extends World {
 
     private static final int WORLD_WIDTH = 600;
     private static final int WORLD_HEIGHT = 400;
+    private int score = 0;
     private int currentLevel = 1; // Initial level
     private int numberOfFishes = 7; // Initial number of fishes for level 1
     private boolean gameStarted = false; // Flag to indicate if the game has started
@@ -41,20 +42,26 @@ public class WaterWorld1 extends World {
         // Remove rules text
         showText("", getWidth() / 2, getHeight() / 2);
         
-        // Add objects and start the game
-        addObject(new Diver(), getWidth() / 2, getHeight() / 2);
+        HealthBar healthBar = new HealthBar(100); // Adjust maximum oxygen level as needed
+        addObject(new Diver(healthBar), getWidth() / 2, getHeight() / 2);
+        addObject(healthBar, getWidth() / 2, 20);
         
         // Add fishes based on the current level
         for (int i = 0; i < numberOfFishes; i++) {
             addObject(new Fish(), Greenfoot.getRandomNumber(getWidth()), Greenfoot.getRandomNumber(getHeight()));
         }
         
-        // Add more initialization as needed for your game
+        // Add treasure
+        addObject(new Treasure(), Greenfoot.getRandomNumber(getWidth()), Greenfoot.getRandomNumber(getHeight()));
+        
+        // Initialize score
+        score = 0;
         
         // Start the game
         gameStarted = true;
         Greenfoot.start();
     }
+
     
     private void drawWorld() {
         GreenfootImage background = new GreenfootImage(getWidth(), getHeight());

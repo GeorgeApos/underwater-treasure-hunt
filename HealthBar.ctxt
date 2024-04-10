@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=HealthBar
+comment1.params=maxOxygen
+comment1.target=HealthBar(double)
+comment2.params=
+comment2.target=void\ act()
+comment3.params=amount
+comment3.target=void\ decreaseOxygen(double)
+comment4.params=amount
+comment4.target=void\ fillOxygen(double)
+comment5.params=
+comment5.target=void\ updateImage()
+numComments=6
