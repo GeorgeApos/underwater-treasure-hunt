@@ -4,6 +4,7 @@ public class WaterWorld1 extends World {
 
     private static final int WORLD_WIDTH = 600;
     private static final int WORLD_HEIGHT = 400;
+    private int treasureCount = 0; // Track the number of regular treasures collected
     private int score = 0;
     private int currentLevel = 1; // Initial level
     private int numberOfFishes = 7; // Initial number of fishes for level 1
@@ -15,6 +16,9 @@ public class WaterWorld1 extends World {
         if (!gameStarted) {
             showRules();
         } else {
+            GreenfootSound genericSound = new GreenfootSound("sea_sound.wav");
+            genericSound.setVolume(50); // Adjust the volume as needed
+            genericSound.playLoop();
             startGame();
         }
     }
@@ -43,7 +47,11 @@ public class WaterWorld1 extends World {
         showText("", getWidth() / 2, getHeight() / 2);
         
         HealthBar healthBar = new HealthBar(100); // Adjust maximum oxygen level as needed
-        addObject(new Diver(healthBar), getWidth() / 2, getHeight() / 2);
+        SimpleTimer simpleTimer = new SimpleTimer();
+        
+        Diver diver = new Diver(healthBar);
+        
+        addObject(diver, getHeight() / 2, getWidth() / 2);
         addObject(healthBar, getWidth() / 2, 20);
         
         // Add fishes based on the current level
@@ -51,14 +59,16 @@ public class WaterWorld1 extends World {
             addObject(new Fish(), Greenfoot.getRandomNumber(getWidth()), Greenfoot.getRandomNumber(getHeight()));
         }
         
-        // Add treasure
-        addObject(new Treasure(), Greenfoot.getRandomNumber(getWidth()), Greenfoot.getRandomNumber(getHeight()));
+        // Add treasures
+        for (int i = 0; i < 3; i++) {
+            spawnBigTreasure(diver);
+        }
         
         // Initialize score
         score = 0;
         
         // Start the game
-        gameStarted = true;
+        gameStarted = true; // Update the gameStarted flag
         Greenfoot.start();
     }
 
@@ -75,5 +85,27 @@ public class WaterWorld1 extends World {
             background.drawLine(0, y, getWidth() - 1, y);
         }
         setBackground(background);
+    }
+    
+    
+    public void incrementTreasureCount(Diver diver) {
+        treasureCount++;
+        if (treasureCount % 3 == 0) {
+            spawnBigTreasure(diver);
+            spawnFish();
+        }
+    }
+
+    private void spawnBigTreasure(Diver diver) {
+        addObject(new Treasure(diver, this), Greenfoot.getRandomNumber(getWidth()), Greenfoot.getRandomNumber(getHeight()));
+    }
+
+    private void spawnFish() {
+        addObject(new Fish(), Greenfoot.getRandomNumber(getWidth()), Greenfoot.getRandomNumber(getHeight()));
+        numberOfFishes++;
+    }
+
+    public void decrementFishCount() {
+        numberOfFishes--;
     }
 }

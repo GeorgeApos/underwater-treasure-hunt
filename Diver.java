@@ -137,11 +137,17 @@ public class Diver extends SmoothMover {
     private void checkEndGame() {
         // Check if the game should end
         if (lives < 1) {
-    
-            // Display end game text
-            getWorld().showText("Game Over", getWorld().getWidth() / 2, getWorld().getHeight() / 2);
+            // Play the game over sound
+            Greenfoot.playSound("you_died.mp3");
+            
+            // Display "you_died.png" image
+            Actor gameOverImage = new Actor() {};
+            gameOverImage.setImage("you_died.png");
+            getWorld().addObject(gameOverImage, getWorld().getWidth() / 2, getWorld().getHeight() / 2);
+            
             // Set the flag to indicate the game has ended
             gameEnded = true;
+            Greenfoot.stop();
         }
     }
     
