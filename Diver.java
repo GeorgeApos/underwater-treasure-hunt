@@ -13,6 +13,8 @@ public class Diver extends SmoothMover {
     private HealthBar healthBar;
     private double oxygenUsageRate = 0.1; // Adjust as needed
     private int oxygenRefillAmount = 10; // Adjust as needed
+    private int treasureCount = 0; // Counter to track the number of treasures eaten
+
 
     public Diver(HealthBar bar){
         healthBar = bar;
@@ -30,6 +32,7 @@ public class Diver extends SmoothMover {
             moveWithKeys();
             checkCollision();
             displayLives();
+            displayScore();
             checkEndGame();
             updateOxygenLevel();
         }
@@ -93,31 +96,42 @@ public class Diver extends SmoothMover {
         }
     }
     
-    private void checkCollision() {
-        // Check for collision with fishes
-        if (isTouching(Fish.class)) {
-            lives--;
-            removeTouching(Fish.class);
-            
-            setImage("diver_red.png"); // Assuming you have a red diver image
-            
-            Greenfoot.delay(30);
-            
-            setImage(images[currentImageIndex]);
-        }
-        
-        // Check for collision with treasure
-        if (isTouching(Treasure.class)) {
-            // Increase score
-            score++;
-            removeTouching(Treasure.class);
-            displayScore();
-            
-        }
+private void checkCollision() {
+    // Check for collision with fishes
+    if (isTouching(Fish.class)) {
+        lives--;
+        removeTouching(Fish.class);
+        setImage("diver_red.png"); // Assuming you have a red diver image
+        Greenfoot.delay(30);
+        setImage(images[currentImageIndex]);
     }
 
+        if (isTouching(Treasure.class)) {
+            Treasure treasure = (Treasure) getOneIntersectingObject(Treasure.class);
+            if (treasure != null) {
+                if (treasure.isBigTreasure()) {
+                    score += 2; // Increase score by 2 for big treasure
+                } else {
+                    score++; // Increase score by 1 for small treasure
+                }
+                displayScore();
+                treasureCount++; // Increment treasure count
 
-    
+                // Add a fish
+                getWorld().addObject(new Fish(), Greenfoot.getRandomNumber(getWorld().getWidth()), Greenfoot.getRandomNumber(getWorld().getHeight()));
+
+                // Add a treasure only if not every 3rd treasure
+                if (treasureCount % 3 != 0) {
+                    getWorld().addObject(new Treasure(this, (WaterWorld1)getWorld(), false), Greenfoot.getRandomNumber(getWorld().getWidth()), Greenfoot.getRandomNumber(getWorld().getHeight()));
+                } else {
+                    getWorld().addObject(new Treasure(this, (WaterWorld1)getWorld(), true), Greenfoot.getRandomNumber(getWorld().getWidth()), Greenfoot.getRandomNumber(getWorld().getHeight()));
+                }
+
+                // Remove the eaten treasure
+                getWorld().removeObject(treasure);
+            }
+        }
+    }
     private void displayLives() {
         // Display remaining lives
         getWorld().showText("Lives: " + lives, 50, 20);
@@ -152,5 +166,8 @@ public class Diver extends SmoothMover {
             lives = 0;
         }
     }
-
 }
+
+
+
+    

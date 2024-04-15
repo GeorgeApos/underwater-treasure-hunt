@@ -9,6 +9,7 @@ public class WaterWorld1 extends World {
     private int currentLevel = 1; 
     private int numberOfFishes = 7; 
     private boolean gameStarted = false; // Flag to indicate if the game has started
+    private SimpleTimer timer = new SimpleTimer(); // Step 1: Declare the timer
 
 
     public WaterWorld1() {
@@ -33,12 +34,19 @@ public class WaterWorld1 extends World {
         showText(rulesText, getWidth() / 2, getHeight() / 2);
     }
 
-    public void act() {
-        if (Greenfoot.mouseClicked(null) && !gameStarted) {
-            startGame();
-            Greenfoot.playSound("sea_sound.wav");
-        }
+public void act() {
+    if (Greenfoot.mouseClicked(null) && !gameStarted) {
+        startGame();
+        Greenfoot.playSound("sea_sound.wav");
     }
+
+    // Step 2 & 3: Mark time and check elapsed time
+    int elapsed = timer.millisElapsed();
+
+    // Show the elapsed time on the screen
+    showText("Time: " + (elapsed / 1000), 50, 80); // Adjust position as needed
+}
+
 
     private void startGame() {
         showText("", getWidth() / 2, getHeight() / 2);
@@ -56,12 +64,13 @@ public class WaterWorld1 extends World {
         }
         
         for (int i = 0; i < 3; i++) {
-            addObject(new Treasure(diver, this), Greenfoot.getRandomNumber(getWidth()), Greenfoot.getRandomNumber(getHeight()));
+            addObject(new Treasure(diver, this, false), Greenfoot.getRandomNumber(getWidth()), Greenfoot.getRandomNumber(getHeight()));
         }
         
         score = 0;
         
         gameStarted = true; 
+        timer.mark(); // Start the game timer
         Greenfoot.start();
     }
 

@@ -1,11 +1,13 @@
 #BlueJ class context
 comment0.target=Treasure
-comment1.params=diver\ world
-comment1.target=Treasure(Diver,\ WaterWorld1)
+comment1.params=diver\ world\ isBigTreasure
+comment1.target=Treasure(Diver,\ WaterWorld1,\ boolean)
 comment2.params=
 comment2.target=void\ act()
 comment3.params=
 comment3.target=void\ checkCollision()
 comment4.params=
 comment4.target=boolean\ shouldChangeImage()
-numComments=5
+comment5.params=
+comment5.target=boolean\ isBigTreasure()
+numComments=6

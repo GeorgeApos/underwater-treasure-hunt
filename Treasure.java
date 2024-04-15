@@ -6,10 +6,12 @@ public class Treasure extends Actor {
     private int currentImageIndex; // Index for current image in the array
     private Diver diver; // Reference to the diver object
     private WaterWorld1 world; // Reference to the world
-    
-    public Treasure(Diver diver, WaterWorld1 world) {
+    private boolean isBigTreasure; // Flag to indicate if the treasure is big
+
+    public Treasure(Diver diver, WaterWorld1 world, boolean isBigTreasure) {
         this.diver = diver;
         this.world = world;
+        this.isBigTreasure = isBigTreasure; // Set the flag for big treasure
         
         // Load images for the treasure
         treasureImages = new GreenfootImage[2]; // Assuming two images for the treasure
@@ -52,5 +54,10 @@ public class Treasure extends Actor {
         // You can use a counter, score, or any other game parameter
         // Return true when the conditions are met, false otherwise
         return false; // Placeholder, change this according to your game logic
+    }
+    
+    // Method to check if the treasure is big
+    public boolean isBigTreasure() {
+        return isBigTreasure;
     }
 }
