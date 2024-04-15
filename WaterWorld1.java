@@ -10,10 +10,12 @@ public class WaterWorld1 extends World {
     private int numberOfFishes = 7; 
     private boolean gameStarted = false; // Flag to indicate if the game has started
     private SimpleTimer timer = new SimpleTimer(); // Step 1: Declare the timer
+    private GreenfootSound backgroundMusic;
 
 
     public WaterWorld1() {
         super(WORLD_WIDTH, WORLD_HEIGHT, 1);
+        backgroundMusic = new GreenfootSound("sea_sound.wav"); // Initialize backgroundMusic
         drawWorld(); 
         if (!gameStarted) {
             showRules();
@@ -23,28 +25,30 @@ public class WaterWorld1 extends World {
     }
 
     private void showRules() {
-        // Display rules on the welcome screen
-        String rulesText = "Welcome to the Fish Game!\n\n";
+        String rulesText = "Welcome to the Underwater Treasure Hunt!\n\n";
         rulesText += "Rules:\n";
         rulesText += "- Click anywhere to start the game.\n";
         rulesText += "- Avoid collisions with other fishes.\n";
-        rulesText += "- Eat food to gain points.\n";
-        rulesText += "- Have fun!";
-        
+        rulesText += "- Capture the treasure to gain points.\n";
+        rulesText += "- Big treasures give 2 points!\n";
+        rulesText += "- Each captured treasure increases the game's difficulty!\n";
+        rulesText += "- Swim up for oxygen!\n";
+        rulesText += "- Score as much as you can in a limited time!\n";
+    
         showText(rulesText, getWidth() / 2, getHeight() / 2);
     }
 
 public void act() {
     if (Greenfoot.mouseClicked(null) && !gameStarted) {
         startGame();
-        Greenfoot.playSound("sea_sound.wav");
+        if (!backgroundMusic.isPlaying()) {
+            backgroundMusic.playLoop();
+        }
     }
 
-    // Step 2 & 3: Mark time and check elapsed time
     int elapsed = timer.millisElapsed();
 
-    // Show the elapsed time on the screen
-    showText("Time: " + (elapsed / 1000), 50, 80); // Adjust position as needed
+    showText("Time: " + (elapsed / 1000), 50, 80); 
 }
 
 
@@ -70,7 +74,7 @@ public void act() {
         score = 0;
         
         gameStarted = true; 
-        timer.mark(); // Start the game timer
+        timer.mark(); 
         Greenfoot.start();
     }
 
