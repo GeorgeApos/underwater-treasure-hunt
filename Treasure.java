@@ -26,7 +26,11 @@ public class Treasure extends Actor {
             treasureImages[i].scale(newWidth, newHeight);
         }
         
-        setImage(treasureImages[currentImageIndex]);
+        if(isBigTreasure){
+            setImage(treasureImages[1]);
+        } else {
+            setImage(treasureImages[0]);
+        }
     }
     
     public void act() {
