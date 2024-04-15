@@ -96,18 +96,13 @@ public class Diver extends SmoothMover {
     private void checkCollision() {
         // Check for collision with fishes
         if (isTouching(Fish.class)) {
-            // Decrease lives when colliding with a fish
             lives--;
-            // Remove the fish after collision
             removeTouching(Fish.class);
             
-            // Change the color of the diver to red
             setImage("diver_red.png"); // Assuming you have a red diver image
             
-            // Delay to show the red color briefly
-            Greenfoot.delay(20); // Adjust the delay as needed
+            Greenfoot.delay(30);
             
-            // Change back to the original image after the delay
             setImage(images[currentImageIndex]);
         }
         
@@ -115,12 +110,12 @@ public class Diver extends SmoothMover {
         if (isTouching(Treasure.class)) {
             // Increase score
             score++;
-            // Remove the treasure after being collected
             removeTouching(Treasure.class);
-            // Update display of score
             displayScore();
+            
         }
     }
+
 
     
     private void displayLives() {

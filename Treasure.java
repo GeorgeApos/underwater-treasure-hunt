@@ -43,8 +43,6 @@ public class Treasure extends Actor {
             }
             // Remove the treasure after being collected
             getWorld().removeObject(this);
-            // Increment treasure count in the world
-            world.incrementTreasureCount(diver);
         }
     }
 
