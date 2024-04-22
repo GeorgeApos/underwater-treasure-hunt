@@ -11,7 +11,7 @@ public class Diver extends SmoothMover {
     private boolean gameEnded = false; 
     private HealthBar healthBar;
     private double oxygenUsageRate = 0.1;
-    private int oxygenRefillAmount = 10;
+    private int oxygenRefillAmount = 0;
     private int treasureCount = 0; 
 
 
@@ -102,29 +102,32 @@ public class Diver extends SmoothMover {
             setImage(images[currentImageIndex]);
         }
     
-            if (isTouching(Treasure.class)) {
-                Treasure treasure = (Treasure) getOneIntersectingObject(Treasure.class);
-                if (treasure != null) {
-                    if (treasure.isBigTreasure()) {
-                        score += 2; 
-                    } else {
-                        score++; 
-                    }
-                    displayScore();
-                    treasureCount++; 
-    
-                    getWorld().addObject(new Fish(), Greenfoot.getRandomNumber(getWorld().getWidth()), Greenfoot.getRandomNumber(getWorld().getHeight()));
-    
-                    if (treasureCount % 3 != 0) {
-                        getWorld().addObject(new Treasure(this, (WaterWorld1)getWorld(), false), Greenfoot.getRandomNumber(getWorld().getWidth()), Greenfoot.getRandomNumber(getWorld().getHeight()));
-                    } else {
-                        getWorld().addObject(new Treasure(this, (WaterWorld1)getWorld(), true), Greenfoot.getRandomNumber(getWorld().getWidth()), Greenfoot.getRandomNumber(getWorld().getHeight()));
-                    }
-    
-                    getWorld().removeObject(treasure);
+        
+        if (isTouching(Treasure.class)) {
+            Treasure treasure = (Treasure) getOneIntersectingObject(Treasure.class);
+            if (treasure != null) {
+                if (treasure.isBigTreasure()) {
+                    score += 2; 
+                } else {
+                    score++; 
                 }
+                displayScore();
+                treasureCount++; 
+    
+                getWorld().addObject(new Fish(), Greenfoot.getRandomNumber(getWorld().getWidth()), Greenfoot.getRandomNumber(getWorld().getHeight()));
+    
+                if (treasureCount % 3 != 0) {
+                    getWorld().addObject(new Treasure(this, (WaterWorld1)getWorld(), false), Greenfoot.getRandomNumber(getWorld().getWidth()), Greenfoot.getRandomNumber(getWorld().getHeight()));
+                } else {
+                    getWorld().addObject(new Treasure(this, (WaterWorld1)getWorld(), true), Greenfoot.getRandomNumber(getWorld().getWidth()), Greenfoot.getRandomNumber(getWorld().getHeight()));
+                }
+    
+                healthBar.fillOxygen(15);
+                getWorld().removeObject(treasure);
             }
         }
+    }
+        
     private void displayLives() {
         getWorld().showText("Lives: " + lives, 50, 20);
     }

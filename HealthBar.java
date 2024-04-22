@@ -25,33 +25,35 @@ public class HealthBar extends Actor {
     }
 
     public void fillOxygen(double amount) {
-        oxygenLevel += fillRate;
+        if (amount > 0) {
+            oxygenLevel += amount;
+        } else {
+            oxygenLevel += fillRate;
+        }
         if (oxygenLevel > maxOxygenLevel) {
             oxygenLevel = maxOxygenLevel;
         }
     }
 
     private void updateImage() {
-        GreenfootImage image = new GreenfootImage((int)(maxOxygenLevel + 2.0), 30); // Increased height to accommodate the title
-        // Set the color to red for the health bar
+        GreenfootImage image = new GreenfootImage((int)(maxOxygenLevel + 2.0), 30); 
         image.setColor(Color.RED);
         image.fillRect(1, 1, (int)oxygenLevel, 18);
-        // Draw the border for the health bar
         image.setColor(Color.BLACK);
         image.drawRect(0, 0, (int)(maxOxygenLevel + 1), 19);
-        // Add a title
         image.setColor(Color.BLACK);
-        image.drawString("Oxygen", 5, 28); // Adjust position as needed
+        image.drawString("Oxygen", 5, 28);
         setImage(image);
          if (oxygenLevel <= 0) {
             if (delayCounter <= 0) {
-                Diver diver = (Diver)getWorld().getObjects(Diver.class).get(0); // Assuming there's only one diver
-                diver.setImage("diver_red.png"); // Change the diver's image to red
+                Diver diver = (Diver)getWorld().getObjects(Diver.class).get(0); 
+                diver.setImage("diver_red.png"); 
                 diver.decreaseLives(1);
-                delayCounter = delayDuration; // Reset the delay counter
+                delayCounter = delayDuration; 
             } else {
-                delayCounter--; // Decrement the delay counter
+                delayCounter--;
             }
         }
     }
+
 }

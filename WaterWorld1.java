@@ -11,7 +11,7 @@ public class WaterWorld1 extends World {
     private boolean gameStarted = false; // Flag to indicate if the game has started
     private SimpleTimer timer = new SimpleTimer(); // Step 1: Declare the timer
     private GreenfootSound backgroundMusic;
-
+    private HealthBar healthBar; 
 
     public WaterWorld1() {
         super(WORLD_WIDTH, WORLD_HEIGHT, 1);
@@ -55,7 +55,7 @@ public void act() {
     private void startGame() {
         showText("", getWidth() / 2, getHeight() / 2);
         
-        HealthBar healthBar = new HealthBar(100); 
+        healthBar = new HealthBar(100); 
         SimpleTimer simpleTimer = new SimpleTimer();
         
         Diver diver = new Diver(healthBar);
@@ -93,4 +93,8 @@ public void act() {
         setBackground(background);
     }
     
+    public HealthBar getHealthBar() {
+        return healthBar;
+    }
+
 }
